@@ -4,7 +4,7 @@ import Navbar from "./_components/Navbar";
 import "@/app/_styles/globals.css";
 
 const manrope = Manrope({
-  weight: "400",
+  weight: "600",
   subsets: ["latin"],
   display: "swap",
 });
@@ -21,10 +21,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${manrope.className}  antialiased`}>
+      <body className={`${manrope.className}  antialiased w-screen h-dvh`}>
         <Navbar />
-        {children}
+        <main>{children}</main>
       </body>
     </html>
   );
 }
+
+// UPDATE THE FONTS - FIND NICE FONT

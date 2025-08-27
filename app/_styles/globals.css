@@ -13,17 +13,17 @@
   --color-primary-900: #1b2631;
   --color-primary-950: #141c24;
 
-  --color-accent-50: #faf5f0;
-  --color-accent-100: #f4ece1;
-  --color-accent-200: #e8d6bf;
-  --color-accent-300: #ddc2a2;
-  --color-accent-400: #d2af84;
-  --color-accent-500: #c69963;
-  --color-accent-600: #b78343;
-  --color-accent-700: #926835;
-  --color-accent-800: #6c4d28;
-  --color-accent-900: #4b351b;
-  --color-accent-950: #382814;
+  --color-secondary-50: #f3faf5;
+  --color-secondary-100: #dff4e5;
+  --color-secondary-200: #bfe9cc;
+  --color-secondary-300: #99dbad;
+  --color-secondary-400: #6fcf8e;
+  --color-secondary-500: #4cb973;
+  --color-secondary-600: #38995c;
+  --color-secondary-700: #2e7a4b;
+  --color-secondary-800: #235c38;
+  --color-secondary-900: #173e26;
+  --color-secondary-950: #0f2c1a;
 }
 
 @layer components {
