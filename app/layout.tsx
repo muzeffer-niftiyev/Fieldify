@@ -35,3 +35,51 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+
+// Field Information
+
+// Field name / number (e.g., "Arena 1" or "Central Turf")
+
+// Location (address, map link, maybe Google Maps embed)
+
+// Surface type (natural grass, artificial turf, futsal court, etc.)
+
+// Field size / type (5-a-side, 7-a-side, 11-a-side)
+
+// Lighting (day only / night lighting available)
+
+// Facilities (showers, locker rooms, parking, seating)
+
+// 💰 Pricing & Booking
+
+// Price per hour (and whether it changes by time/day)
+
+// Available time slots (calendar or booking schedule)
+
+// Booking duration rules (minimum/maximum time per booking)
+
+// Cancellation policy
+
+// 📸 Media & Visuals
+
+// Photos of the field (and facilities)
+
+// Virtual tour / short video (optional, but engaging)
+
+// 👥 Extra Details
+
+// Capacity (how many players can comfortably play)
+
+// Equipment availability (balls, bibs, goals, nets)
+
+// Services (referee, coach, refreshments)
+
+// ⚡️ Nice-to-have (but optional)
+
+// User reviews & ratings
+
+// Upcoming tournaments or leagues
+
+// Special offers / memberships

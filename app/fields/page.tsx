@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { getFields } from "../_services/dataService";
+import Link from "next/link";
+import { FaArrowRight } from "react-icons/fa";
 
 export const metadata = {
   title: "Fields",
@@ -34,7 +36,7 @@ const Page = async () => {
                 alt={`${field.name} image`}
               />
               <div className="p-5 relative w-full">
-                <p className="text-4xl text-secondary-800">{field.name}</p>
+                <p className="text-4xl text-secondary-700">{field.name}</p>
                 <p className="absolute bottom-5 right-5 text-primary-200 text-4xl font-medium">
                   ${field.price}
                   <span className="text-primary-300 text-lg"> / hour</span>
@@ -42,9 +44,13 @@ const Page = async () => {
               </div>
             </div>
             <div className="border-t border-primary-900 flex justify-end">
-              <button className="text-md px-7 py-4 border-l border-primary-900 cursor-pointer hover:bg-secondary-900 transition-colors duration-300">
-                Reservation
-              </button>
+              <Link
+                href={`/fields/${field.id}`}
+                className="flex gap-2 items-center text-md px-7 py-4 border-l border-primary-900 cursor-pointer hover:bg-secondary-900 transition-colors duration-300"
+              >
+                More Info & Reservation
+                <FaArrowRight />
+              </Link>
             </div>
           </div>
         ))}
