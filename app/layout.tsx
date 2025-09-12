@@ -29,26 +29,16 @@ export default function RootLayout({
       >
         <Navbar />
         <div className="flex-1 px-10 py-14 w-full">
-          <main className="max-w-6xl mx-auto">{children}</main>
+          <main className="max-w-7xl mx-auto">{children}</main>
         </div>
       </body>
     </html>
   );
 }
 
-
-
 // Field Information
 
-// Field name / number (e.g., "Arena 1" or "Central Turf")
-
 // Location (address, map link, maybe Google Maps embed)
-
-// Surface type (natural grass, artificial turf, futsal court, etc.)
-
-// Field size / type (5-a-side, 7-a-side, 11-a-side)
-
-// Lighting (day only / night lighting available)
 
 // Facilities (showers, locker rooms, parking, seating)
 

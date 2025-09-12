@@ -3,3 +3,7 @@ export interface FieldParams {
     fieldId: number;
   };
 }
+
+export type TextToggleProps = {
+  children: string;
+};
