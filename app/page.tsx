@@ -14,7 +14,7 @@ const Page = () => {
         className="object-cover object-top brightness-70"
       />
       <div className="flex flex-col items-center mt-60 relative z-10">
-        <p className="text-6xl text-primary-100">
+        <p className="text-6xl text-primary-200">
           Welcome to Easy Field Booking.
         </p>
         <Link

@@ -13,7 +13,7 @@ const Page = async () => {
   return (
     <div>
       <header>
-        <h2 className="text-primary-400 font-bold text-4xl">
+        <h2 className="text-primary-300 font-bold text-4xl">
           Our Football Fields
         </h2>
         <p className="text-primary-300 leading-6 text-md my-8">
