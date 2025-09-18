@@ -1,9 +1,10 @@
 "use client";
-import { useState } from "react";
+
 import { useForm } from "react-hook-form";
-import { signUp } from "../_services/auth";
 import { authType } from "../_types/auth";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "../_services/auth";
 
 const Page = () => {
   const {
@@ -13,20 +14,19 @@ const Page = () => {
     reset,
   } = useForm<authType>();
   const [loading, setLoading] = useState(false);
-  const [serverError, setServerError] = useState<null | string>(null);
   const router = useRouter();
 
   const onSubmit = async (data: authType) => {
     setLoading(true);
-    setServerError(null);
 
     try {
-      await signUp(data);
-      router.back();
+      await signIn(data);
+      router.push("/fields");
+      //toast message here
       reset();
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setServerError(err.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        //toast the error
       }
     } finally {
       setLoading(false);
@@ -38,7 +38,7 @@ const Page = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center mt-15"
     >
-      <h2 className="text-4xl text-primary-200 mb-10">Sign Up</h2>
+      <h2 className="text-4xl text-primary-200 mb-10">Login</h2>
 
       <div className="flex flex-col gap-8 mb-8">
         <div>
@@ -86,17 +86,10 @@ const Page = () => {
         disabled={loading}
         className="bg-blue-700 text-primary-100 px-10 py-3 rounded hover:bg-blue-800 cursor-pointer transition-colors duration-300 disabled:opacity-50"
       >
-        {loading ? "Signing up..." : "Sign Up"}
+        {loading ? "Logging in..." : "Login"}
       </button>
-
-      {serverError && (
-        <p className="text-sm mt-3 text-[#c71616] font-bold">{serverError}</p>
-      )}
     </form>
   );
 };
 
 export default Page;
-
-
-// Mesajlar react-hot-toastda olacaq , qirmizi errorlar silinecek

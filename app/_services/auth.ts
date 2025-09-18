@@ -19,11 +19,10 @@ export const signUp = async ({ email, password }: authType) => {
 };
 
 export const signIn = async ({ email, password }: authType) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
   if (error) throw error;
-  return data;
 };
