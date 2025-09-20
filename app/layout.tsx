@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import Navbar from "./_components/Navbar";
 import "@/app/_styles/globals.css";
+import { cookies } from "next/headers";
+import { AuthProvider } from "./_context/AuthContext";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 
 const quicksand = Quicksand({
   weight: ["700", "600", "500", "400"],
@@ -17,20 +20,27 @@ export const metadata: Metadata = {
   description: "Football Field reservation",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <html lang="en">
       <body
         className={`${quicksand.className} font-bold antialiased min-h-screen bg-primary-950 text-primary-100 flex flex-col relative`}
       >
-        <Navbar />
-        <div className="flex-1 px-10 py-14 w-full">
-          <main className="max-w-7xl mx-auto">{children}</main>
-        </div>
+        <AuthProvider initialUser={user}>
+          <Navbar />
+          <div className="flex-1 px-10 py-14 w-full">
+            <main className="max-w-7xl mx-auto">{children}</main>
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );

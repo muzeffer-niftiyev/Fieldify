@@ -27,6 +27,7 @@ const Page = () => {
     } catch (error: unknown) {
       if (error instanceof Error) {
         //toast the error
+        console.log(error)
       }
     } finally {
       setLoading(false);
