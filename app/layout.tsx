@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import Navbar from "./_components/Navbar";
 import "@/app/_styles/globals.css";
-import { cookies } from "next/headers";
+import { createClient } from "./_utils/supabase/server";
 import { AuthProvider } from "./_context/AuthContext";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 
 const quicksand = Quicksand({
   weight: ["700", "600", "500", "400"],
@@ -25,10 +24,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = createServerComponentClient({ cookies });
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getUser();
+  const user = data?.user ?? null;
 
   return (
     <html lang="en">
@@ -45,6 +43,8 @@ export default async function RootLayout({
     </html>
   );
 }
+
+// Set up the react hot toast
 
 // Field Information
 

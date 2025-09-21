@@ -1,47 +1,24 @@
 "use client";
-
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createContext, useContext, useState } from "react";
+import { AuthPropsType, AuthType } from "../_types/auth";
 import { User } from "@supabase/supabase-js";
-import { createContext, useContext, useEffect, useState } from "react";
 
-const AuthContext = createContext<{ user: User | null }>({ user: null });
+const AuthContext = createContext<AuthType | undefined>(undefined);
 
-const AuthProvider = ({
-  children,
-  initialUser,
-}: {
-  children: React.ReactNode;
-  initialUser: User | null;
-}) => {
-  const supabase = createClientComponentClient();
+export function AuthProvider({ initialUser, children }: AuthPropsType) {
   const [user, setUser] = useState<User | null>(initialUser);
-  console.log(user);
-
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => setUser(data.user));
-
-    const { data: subscription } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setUser(session?.user ?? null);
-      }
-    );
-
-    return () => {
-      subscription.subscription.unsubscribe();
-    };
-  }, [supabase]);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, setUser }}>
+      {children}
+    </AuthContext.Provider>
   );
-};
+}
 
-const useAuth = () => {
+export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used inside AuthProvider");
+    throw new Error("Couldn't get user data!");
   }
   return context;
 };
-
-export { AuthProvider, useAuth };
