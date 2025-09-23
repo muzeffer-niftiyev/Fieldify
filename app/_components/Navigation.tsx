@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useAuth } from "../_context/AuthContext";
 
 export default function Navigation() {
-  const {user} = useAuth();
+  const { user } = useAuth();
 
   return (
     <div className="flex gap-14 relative z-10">

@@ -1,3 +1,5 @@
+import { signoutAction } from "./actions";
+
 const Layout = ({
   children,
 }: Readonly<{
@@ -8,7 +10,11 @@ const Layout = ({
       <aside className="flex flex-col items-start gap-5 text-lg">
         <button className="py-4 cursor-pointer">Profile</button>
         <button className="py-4 cursor-pointer">Reservations</button>
-        <button className="py-4 cursor-pointer">Sign Out</button>
+        <form>
+          <button formAction={signoutAction} className="py-4 cursor-pointer">
+            Sign Out
+          </button>
+        </form>
       </aside>
       <main>{children}</main>
     </div>

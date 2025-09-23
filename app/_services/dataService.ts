@@ -21,3 +21,11 @@ export const getField = async (id: number) => {
   }
   return data;
 };
+
+export const addNewUserEmail = async (email: string) => {
+  const { error } = await supabase.from("users").insert([{ email }]);
+
+  if (error) {
+    console.log(error);
+  }
+};

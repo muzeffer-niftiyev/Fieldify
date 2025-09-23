@@ -24,7 +24,6 @@ export async function generateStaticParams() {
 
 const Page = async ({ params }: FieldParams) => {
   const field = await getField(params.fieldId);
-  console.log(field);
 
   return (
     <div>
