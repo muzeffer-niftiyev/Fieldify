@@ -24,4 +24,4 @@ export const signoutAction = async () => {
   }
 
   redirect("/fields");
-}
+};

@@ -2,11 +2,11 @@ import { User } from "@supabase/supabase-js"
 import { ReactNode } from "react";
 
 export type AuthType = {
-  user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  user: User | undefined;
+  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
 };
 
 export type AuthPropsType = {
-  initialUser: User | null;
+  initialUser: User | undefined;
   children: ReactNode;
 };
