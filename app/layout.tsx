@@ -4,6 +4,7 @@ import Navbar from "./_components/Navbar";
 import "@/app/_styles/globals.css";
 import { createClient } from "./_utils/supabase/server";
 import { AuthProvider } from "./_context/AuthContext";
+import { ReservationProvider } from "./_context/ReservationContext";
 
 const quicksand = Quicksand({
   weight: ["700", "600", "500", "400"],
@@ -34,10 +35,12 @@ export default async function RootLayout({
         className={`${quicksand.className} font-bold antialiased min-h-screen bg-primary-950 text-primary-100 flex flex-col relative`}
       >
         <AuthProvider initialUser={user}>
-          <Navbar />
-          <div className="flex-1 px-10 py-14 w-full">
-            <main className="max-w-7xl mx-auto">{children}</main>
-          </div>
+          <ReservationProvider>
+            <Navbar />
+            <div className="flex-1 px-10 py-14 w-full">
+              <main className="max-w-7xl mx-auto">{children}</main>
+            </div>
+          </ReservationProvider>
         </AuthProvider>
       </body>
     </html>

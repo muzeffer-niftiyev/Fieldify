@@ -5,6 +5,7 @@ import { FaPeopleLine } from "react-icons/fa6";
 import { GiGrass } from "react-icons/gi";
 import { FaExpandArrowsAlt, FaDollarSign } from "react-icons/fa";
 import TextToggle from "@/app/_components/TextToggle";
+import DaySelector from "@/app/_components/DaySelector";
 
 export async function generateMetadata({ params }: FieldParams) {
   const { name } = await getField(params.fieldId);
@@ -67,6 +68,10 @@ const Page = async ({ params }: FieldParams) => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div>
+        <DaySelector/>
       </div>
     </div>
   );
