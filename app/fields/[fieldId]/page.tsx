@@ -28,7 +28,7 @@ const Page = async ({ params }: FieldParams) => {
 
   return (
     <div>
-      <div className="max-w-6xl border border-primary-900 flex mx-auto mt-10 relative">
+      <div className="max-w-6xl border-2 border-primary-900 flex mx-auto mt-10 relative">
         <div className="flex-1 relative">
           <Image
             src={field.image}
@@ -70,7 +70,7 @@ const Page = async ({ params }: FieldParams) => {
         </div>
       </div>
 
-      <div>
+      <div className="max-w-6xl flex mx-auto mt-20 flex-col">
         <DaySelector/>
       </div>
     </div>

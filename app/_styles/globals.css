@@ -59,6 +59,16 @@ input:-webkit-autofill:active {
     animation: rotate 1s infinite linear;
   }
 
+  .rdp {
+    --rdp-today-color: theme("colors.primary.700") !important;
+    --rdp-day_button-height: 45px !important;
+    --rdp-day_button-width: 45px !important;
+    --rdp-day-height: 50px !important;
+    --rdp-cell-size: 32px !important;
+    --rdp-accent-color: theme("colors.primary.700") !important;
+    margin: 0 !important;
+  }
+
   @keyframes rotate {
     to {
       transform: rotate(1turn);
