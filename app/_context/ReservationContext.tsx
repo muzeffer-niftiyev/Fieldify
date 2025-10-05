@@ -1,13 +1,13 @@
 "use client";
 
 import { createContext, ReactNode, useContext, useState } from "react";
-import { ReservationType } from "../_types/reservation";
+import { HourRangeType, ReservationType } from "../_types/reservation";
 
 const ReservationConext = createContext<ReservationType | undefined>(undefined);
 
 export const ReservationProvider = ({ children }: { children: ReactNode }) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-  const [hourRange, setHourRange] = useState<object>({});
+  const [hourRange, setHourRange] = useState<HourRangeType>({from: "", to: ""});
 
   const resetDate = () => setSelectedDate(undefined);
 

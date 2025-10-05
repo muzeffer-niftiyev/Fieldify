@@ -3,13 +3,44 @@
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import { useReservation } from "../_context/ReservationContext";
-import { useEffect } from "react";
+
+const fromHours = Array.from({ length: 9 }, (_, i) => 12 + i);
+const toHours = Array.from({ length: 9 }, (_, i) => 13 + i);
 
 const DaySelector = () => {
-  const { selectedDate, setSelectedDate } = useReservation();
+  const { selectedDate, setSelectedDate, setHourRange, hourRange } =
+    useReservation();
+
+  const handleFromChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const from = event.target.value;
+    setHourRange(() => ({ from, to: String(+from + 1) }));
+  };
+
+  const handleToChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const to = event.target.value;
+    setHourRange((prev) => ({ ...prev, to }));
+  };
+
+  const filteredFromHours = fromHours.filter((hour) => {
+    if (!hourRange.to) return true;
+    const toIndex = fromHours.indexOf(+hourRange.to);
+    const hourIndex = fromHours.indexOf(hour);
+    return toIndex > hourIndex && hourIndex >= toIndex - 3;
+  });
+
+  const filteredToHours = toHours.filter((hour) => {
+    if (!hourRange.from) return true;
+    const fromIndex = toHours.indexOf(+hourRange.from);
+    const hourIndex = toHours.indexOf(hour);
+    return hourIndex > fromIndex && hourIndex <= fromIndex + 3;
+  });
+
+  const resetHours = () => {
+    setHourRange({ from: "", to: "" });
+  };
 
   return (
-    <div className="w-[50%] justify-center items-center">
+    <div className="w-[50%] flex items-start gap-8">
       <DayPicker
         className="rdp"
         animate
@@ -21,21 +52,21 @@ const DaySelector = () => {
         endMonth={new Date(new Date().setMonth(new Date().getMonth() + 2))}
       />
       {selectedDate && (
-        <div className="flex gap-8 mt-8 w-full">
+        <div className="flex gap-8 mt-8 w-full flex-col">
           <div className="flex flex-1 flex-col gap-2">
             <label htmlFor="from" className="text-lg text-primary-200">
-              From
+              Start Hour
             </label>
             <select
               className="border-2 border-primary-900 rounded px-4 py-3 outline-none text-md cursor-pointer"
               name="from"
-              onChange={(e) => console.log(e.target.value)}
+              onChange={(event) => handleFromChange(event)}
             >
-              {Array.from({ length: 9 }, (_, i) => 12 + i).map((hour) => (
+              {filteredFromHours.map((hour) => (
                 <option
                   key={hour}
                   value={hour}
-                  className="text-primary-200 bg-primary-900 font-semibold"
+                  className="text-primary-200 bg-primary-900 font-semibold disabled:text-primary-800"
                 >
                   {hour}:00
                 </option>
@@ -45,23 +76,32 @@ const DaySelector = () => {
 
           <div className="flex flex-1 flex-col gap-2">
             <label htmlFor="to" className="text-lg text-primary-200">
-              To
+              End Hour
             </label>
             <select
               className="border-2 border-primary-900 rounded px-4 py-3 outline-none text-md cursor-pointer"
               name="to"
-              onChange={(e) => console.log(e.target.value)}
+              onChange={(event) => handleToChange(event)}
             >
-              {Array.from({ length: 9 }, (_, i) => 12 + i).map((hour) => (
+              {filteredToHours.map((hour) => (
                 <option
                   key={hour}
                   value={hour}
-                  className="text-primary-200 bg-primary-900 font-semibold"
+                  className="text-primary-200 bg-primary-900 font-semibold disabled:text-primary-800 "
                 >
                   {hour}:00
                 </option>
               ))}
             </select>
+          </div>
+
+          <div className="flex justify-center">
+            <button
+              onClick={resetHours}
+              className="font-semibold text-lg bg-primary-900 hover:bg-primary-800 transition-all duration-300 py-2 px-12 cursor-pointer rounded-md"
+            >
+              Reset Hours
+            </button>
           </div>
         </div>
       )}
