@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import Navbar from "./_components/Navbar";
 import "@/app/_styles/globals.css";
-import { createClient } from "./_utils/supabase/server";
-import { AuthProvider } from "./_context/AuthContext";
+
 import { ReservationProvider } from "./_context/ReservationContext";
 
 const quicksand = Quicksand({
@@ -25,23 +24,17 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = await createClient();
-  const { data } = await supabase.auth.getUser();
-  const user = data?.user ?? undefined;
-
   return (
     <html lang="en">
       <body
         className={`${quicksand.className} font-bold antialiased min-h-screen bg-primary-950 text-primary-100 flex flex-col relative`}
       >
-        <AuthProvider initialUser={user}>
-          <ReservationProvider>
-            <Navbar />
-            <div className="flex-1 px-10 py-14 w-full">
-              <main className="max-w-7xl mx-auto">{children}</main>
-            </div>
-          </ReservationProvider>
-        </AuthProvider>
+        <ReservationProvider>
+          <Navbar />
+          <div className="flex-1 px-10 py-14 w-full">
+            <main className="max-w-7xl mx-auto">{children}</main>
+          </div>
+        </ReservationProvider>
       </body>
     </html>
   );

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { signup } from "./actions";
 
 const Page = () => {
   return (
@@ -33,7 +32,6 @@ const Page = () => {
 
       <button
         type="submit"
-        formAction={signup}
         className="bg-blue-700 text-primary-100 px-10 py-3 rounded hover:bg-blue-800 cursor-pointer transition-colors duration-300 disabled:opacity-50"
       >
         Sign Up
@@ -43,5 +41,3 @@ const Page = () => {
 };
 
 export default Page;
-
-// Mesajlar react-hot-toastda olacaq , qirmizi errorlar silinecek

@@ -13,7 +13,7 @@ const DaySelector = () => {
 
   const handleFromChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const from = event.target.value;
-    setHourRange(() => ({ from, to: String(+from + 1) }));
+    setHourRange((prev) => ({ ...prev, from }));
   };
 
   const handleToChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -23,16 +23,16 @@ const DaySelector = () => {
 
   const filteredFromHours = fromHours.filter((hour) => {
     if (!hourRange.to) return true;
-    const toIndex = fromHours.indexOf(+hourRange.to);
+    const toIndex = toHours.indexOf(+hourRange.to);
     const hourIndex = fromHours.indexOf(hour);
-    return toIndex > hourIndex && hourIndex >= toIndex - 3;
+    return toIndex >= hourIndex && hourIndex > toIndex - 3;
   });
 
   const filteredToHours = toHours.filter((hour) => {
     if (!hourRange.from) return true;
-    const fromIndex = toHours.indexOf(+hourRange.from);
+    const fromIndex = fromHours.indexOf(+hourRange.from);
     const hourIndex = toHours.indexOf(hour);
-    return hourIndex > fromIndex && hourIndex <= fromIndex + 3;
+    return hourIndex >= fromIndex && hourIndex < fromIndex + 3;
   });
 
   const resetHours = () => {
@@ -47,7 +47,7 @@ const DaySelector = () => {
         mode="single"
         selected={selectedDate}
         onSelect={setSelectedDate}
-        disabled={{ before: new Date() }}
+        disabled={[{ before: new Date() }, new Date()]}
         startMonth={new Date()}
         endMonth={new Date(new Date().setMonth(new Date().getMonth() + 2))}
       />
@@ -60,6 +60,7 @@ const DaySelector = () => {
             <select
               className="border-2 border-primary-900 rounded px-4 py-3 outline-none text-md cursor-pointer"
               name="from"
+              value={hourRange.from || "12"}
               onChange={(event) => handleFromChange(event)}
             >
               {filteredFromHours.map((hour) => (
@@ -81,6 +82,7 @@ const DaySelector = () => {
             <select
               className="border-2 border-primary-900 rounded px-4 py-3 outline-none text-md cursor-pointer"
               name="to"
+              value={hourRange.to || "13"}
               onChange={(event) => handleToChange(event)}
             >
               {filteredToHours.map((hour) => (

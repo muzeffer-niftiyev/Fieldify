@@ -1,5 +1,3 @@
-import { signoutAction } from "./actions";
-
 const Layout = ({
   children,
 }: Readonly<{
@@ -11,9 +9,7 @@ const Layout = ({
         <button className="py-4 cursor-pointer">Profile</button>
         <button className="py-4 cursor-pointer">Reservations</button>
         <form>
-          <button formAction={signoutAction} className="py-4 cursor-pointer">
-            Sign Out
-          </button>
+          <button className="py-4 cursor-pointer">Sign Out</button>
         </form>
       </aside>
       <main>{children}</main>

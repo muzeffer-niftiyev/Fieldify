@@ -6,6 +6,7 @@ import { GiGrass } from "react-icons/gi";
 import { FaExpandArrowsAlt, FaDollarSign } from "react-icons/fa";
 import TextToggle from "@/app/_components/TextToggle";
 import DaySelector from "@/app/_components/DaySelector";
+import SubmitReservation from "@/app/_components/SubmitReservation";
 
 export async function generateMetadata({ params }: FieldParams) {
   const { name } = await getField(params.fieldId);
@@ -70,8 +71,14 @@ const Page = async ({ params }: FieldParams) => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto mt-20">
-        <DaySelector/>
+      <div className="max-w-7xl mx-auto mt-20 border-2 border-primary-900 px-8 py-6 flex flex-col items-center">
+        <h2 className="text-5xl text-primary-200">Reserve Now</h2>
+        <div className="flex justify-between w-full gap-6 mt-6">
+          <DaySelector />
+          <div className="w-[50%]">
+            <SubmitReservation />
+          </div>
+        </div>
       </div>
     </div>
   );
