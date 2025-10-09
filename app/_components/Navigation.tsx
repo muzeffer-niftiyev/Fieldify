@@ -12,10 +12,6 @@ const Navigation = async () => {
       <Link href="/account" className="text-xl text-primary-100">
         Account
       </Link>
-
-      <Link href="/login" className="text-xl text-primary-100">
-        Login
-      </Link>
     </div>
   );
 };

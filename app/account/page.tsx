@@ -1,6 +1,10 @@
 import { auth } from "../_services/auth";
 
-const Page = async  () => {
+export const metadata = {
+  title: "Account",
+};
+
+const Page = async () => {
   const session = await auth();
 
   return <div>Welcome, {session?.user?.name}</div>;

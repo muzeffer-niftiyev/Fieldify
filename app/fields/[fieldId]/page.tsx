@@ -7,6 +7,8 @@ import { FaExpandArrowsAlt, FaDollarSign } from "react-icons/fa";
 import TextToggle from "@/app/_components/TextToggle";
 import DaySelector from "@/app/_components/DaySelector";
 import SubmitReservation from "@/app/_components/SubmitReservation";
+import { auth } from "@/app/_services/auth";
+import LoginMessage from "@/app/_components/LoginMessage";
 
 export async function generateMetadata({ params }: FieldParams) {
   const { name } = await getField(params.fieldId);
@@ -26,6 +28,7 @@ export async function generateStaticParams() {
 
 const Page = async ({ params }: FieldParams) => {
   const field = await getField(params.fieldId);
+  const session = await auth();
 
   return (
     <div>
@@ -76,7 +79,7 @@ const Page = async ({ params }: FieldParams) => {
         <div className="flex justify-between w-full gap-6 mt-6">
           <DaySelector />
           <div className="w-[50%]">
-            <SubmitReservation />
+            {session?.user ? <SubmitReservation /> : <LoginMessage />}
           </div>
         </div>
       </div>

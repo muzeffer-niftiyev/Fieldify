@@ -29,3 +29,23 @@ export const addNewUserEmail = async (email: string) => {
     console.log(error);
   }
 };
+
+export const getUser = async (email: string) => {
+  const { data, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("email", email)
+    .single();
+
+  return data;
+};
+
+export const createUser = async (newUser: { email: string; name: string }) => {
+  const { data, error } = await supabase.from("users").insert([newUser]);
+
+  if (error) {
+    console.log(error);
+  }
+
+  return data;
+};

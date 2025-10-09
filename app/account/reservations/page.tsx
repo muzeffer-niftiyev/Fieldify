@@ -1,9 +1,10 @@
+
 export const metadata = {
-  title: "About",
+  title: "Reservations",
 };
 
 const Page = () => {
-  return <div>ABOUT PAGE</div>;
+  return <div>Your Reservations</div>;
 };
 
 export default Page;

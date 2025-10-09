@@ -1,17 +1,13 @@
+import AccountNavigation from "../_components/AccountNavigation";
+
 const Layout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="flex gap-30">
-      <aside className="flex flex-col items-start gap-5 text-lg">
-        <button className="py-4 cursor-pointer">Profile</button>
-        <button className="py-4 cursor-pointer">Reservations</button>
-        <form>
-          <button className="py-4 cursor-pointer">Sign Out</button>
-        </form>
-      </aside>
+    <div className="flex gap-24 h-full">
+      <AccountNavigation />
       <main>{children}</main>
     </div>
   );

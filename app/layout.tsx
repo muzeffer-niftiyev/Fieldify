@@ -31,8 +31,8 @@ export default async function RootLayout({
       >
         <ReservationProvider>
           <Navbar />
-          <div className="flex-1 px-10 py-14 w-full">
-            <main className="max-w-7xl mx-auto">{children}</main>
+          <div className="flex flex-1 px-10 py-14 w-full">
+            <main className="max-w-7xl mx-auto flex-1">{children}</main>
           </div>
         </ReservationProvider>
       </body>
