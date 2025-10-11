@@ -8,7 +8,7 @@ const Layout = ({
   return (
     <div className="flex gap-24 h-full">
       <AccountNavigation />
-      <main>{children}</main>
+      <main className="w-full">{children}</main>
     </div>
   );
 };

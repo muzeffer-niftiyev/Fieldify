@@ -3,6 +3,7 @@
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import { useReservation } from "../_context/ReservationContext";
+import { EventType } from "../_types/fields";
 
 const fromHours = Array.from({ length: 9 }, (_, i) => 12 + i);
 const toHours = Array.from({ length: 9 }, (_, i) => 13 + i);
@@ -11,12 +12,12 @@ const DaySelector = () => {
   const { selectedDate, setSelectedDate, setHourRange, hourRange } =
     useReservation();
 
-  const handleFromChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleFromChange = (event: EventType) => {
     const from = event.target.value;
     setHourRange((prev) => ({ ...prev, from }));
   };
 
-  const handleToChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleToChange = (event: EventType) => {
     const to = event.target.value;
     setHourRange((prev) => ({ ...prev, to }));
   };

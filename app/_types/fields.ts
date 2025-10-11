@@ -7,3 +7,5 @@ export interface FieldParams {
 export type TextToggleProps = {
   children: string;
 };
+
+export type EventType = React.ChangeEvent<HTMLSelectElement>;
