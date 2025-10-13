@@ -9,36 +9,53 @@ const fromHours = Array.from({ length: 9 }, (_, i) => 12 + i);
 const toHours = Array.from({ length: 9 }, (_, i) => 13 + i);
 
 const DaySelector = () => {
-  const { selectedDate, setSelectedDate, setHourRange, hourRange } =
-    useReservation();
+  const {
+    selectedDate,
+    setSelectedDate,
+    setHourRange,
+    hourRange,
+    resetHourRange,
+  } = useReservation();
 
   const handleFromChange = (event: EventType) => {
     const from = event.target.value;
-    setHourRange((prev) => ({ ...prev, from }));
+
+    const newTo =
+      !hourRange.to || +hourRange.to <= +from
+        ? Math.min(+from + 1, toHours[toHours.length - 1]).toString()
+        : hourRange.to;
+
+    setHourRange(() => ({ to: newTo, from }));
   };
 
   const handleToChange = (event: EventType) => {
     const to = event.target.value;
-    setHourRange((prev) => ({ ...prev, to }));
+    let newFrom;
+
+    if (+to - +hourRange.from > 3) {
+      newFrom = +to - 3;
+    }
+
+    if (newFrom) {
+      setHourRange(() => ({ from: newFrom, to }));
+    } else {
+      setHourRange((prev) => ({ ...prev, to }));
+    }
   };
 
   const filteredFromHours = fromHours.filter((hour) => {
-    if (!hourRange.to) return true;
+    if (+hourRange.to === 13) return true;
     const toIndex = toHours.indexOf(+hourRange.to);
     const hourIndex = fromHours.indexOf(hour);
     return toIndex >= hourIndex && hourIndex > toIndex - 3;
   });
 
   const filteredToHours = toHours.filter((hour) => {
-    if (!hourRange.from) return true;
+    if (+hourRange.from === 12) return true;
     const fromIndex = fromHours.indexOf(+hourRange.from);
     const hourIndex = toHours.indexOf(hour);
     return hourIndex >= fromIndex && hourIndex < fromIndex + 3;
   });
-
-  const resetHours = () => {
-    setHourRange({ from: "", to: "" });
-  };
 
   return (
     <div className="w-[50%] flex items-start gap-8">
@@ -100,7 +117,7 @@ const DaySelector = () => {
 
           <div className="flex justify-center">
             <button
-              onClick={resetHours}
+              onClick={() => resetHourRange()}
               className="font-semibold text-lg bg-primary-900 hover:bg-primary-800 transition-all duration-300 py-2 px-12 cursor-pointer rounded-md"
             >
               Reset Hours

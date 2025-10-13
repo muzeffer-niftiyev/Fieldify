@@ -52,12 +52,23 @@ export const createUser = async (newUser: { email: string; name: string }) => {
 
 export const getCountries = async () => {
   try {
-    const res = await fetch(
-      "https://restcountries.com/v2/all?fields=name,flag"
-    );
+    const res = await fetch("https://restcountries.com/v2/all?fields=name");
     const countries = await res.json();
     return countries;
   } catch {
     throw new Error("Could not fetch countries");
   }
+};
+
+export const getReservations = async (userId: string | undefined) => {
+  const { data, error } = await supabase
+    .from("reservations")
+    .select(
+      "id, created_at, date, endHour, startHour,totalPrice, status, details, userId, fieldId, fields(name, image)"
+    )
+    .eq("userId", userId)
+    .order("date");
+
+  if (error) throw new Error("Could not get reservations");
+  return data;
 };

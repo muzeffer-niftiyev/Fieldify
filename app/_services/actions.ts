@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { supabase } from "../_utils/supabase/client";
 import { auth, signIn, signOut } from "./auth";
 import { redirect } from "next/navigation";
+import { getReservations } from "./dataService";
 
 export async function signInAction() {
   await signIn("google", { redirectTo: "/account" });
@@ -21,7 +22,7 @@ export async function updateProfile(formData: FormData) {
   const countryData = formData.get("country") as string;
   const [country, countryFlag] = countryData.split("%");
 
-  if (!/^\+?[0-9]{7,15}$/.test(phone)) {
+  if (phone && !/^\+?[0-9]{7,15}$/.test(phone)) {
     throw new Error("Please provide valid mobile number");
   }
 
@@ -34,5 +35,27 @@ export async function updateProfile(formData: FormData) {
 
   if (error) throw new Error("Profile data coud not be updated");
   revalidatePath("/account");
-  redirect('/fields');
+  redirect("/fields");
+}
+
+export async function deleteReservation(reservationId: number) {
+  const session = await auth();
+  if (!session) throw new Error("You must be logged in");
+
+  const userReservations = await getReservations(session.user.userId);
+  const userReservationIds = userReservations.map(
+    (reservation) => reservation.id
+  );
+
+  if (!userReservationIds.includes(reservationId)) {
+    throw new Error("You can't delete other's reservations");
+  }
+
+  const { error } = await supabase
+    .from("reservations")
+    .delete()
+    .eq("id", reservationId);
+
+  if (error) throw new Error("Error deleting the reservation!");
+  revalidatePath("/account/reservations");
 }

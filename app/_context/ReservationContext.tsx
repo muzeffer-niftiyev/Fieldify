@@ -7,13 +7,24 @@ const ReservationConext = createContext<ReservationType | undefined>(undefined);
 
 export const ReservationProvider = ({ children }: { children: ReactNode }) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-  const [hourRange, setHourRange] = useState<HourRangeType>({from: "", to: ""});
+  const [hourRange, setHourRange] = useState<HourRangeType>({
+    from: "12",
+    to: "13",
+  });
 
-  const resetDate = () => setSelectedDate(undefined);
+  const resetHourRange = () => {
+    setHourRange({ from: "12", to: "13" });
+  };
 
   return (
     <ReservationConext.Provider
-      value={{ selectedDate, setSelectedDate, resetDate, hourRange, setHourRange }}
+      value={{
+        selectedDate,
+        setSelectedDate,
+        resetHourRange,
+        hourRange,
+        setHourRange,
+      }}
     >
       {children}
     </ReservationConext.Provider>

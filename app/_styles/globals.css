@@ -16,18 +16,17 @@
   --color-primary-900: #1b2631;
   --color-primary-950: #141c24;
 
-  --color-secondary-50:  #E3F2FD;
---color-secondary-100: #BBDEFB;
---color-secondary-200: #90CAF9;
---color-secondary-300: #64B5F6;
---color-secondary-400: #42A5F5;
---color-secondary-500: #2196F3;
---color-secondary-600: #1E88E5;
---color-secondary-700: #1976D2;
---color-secondary-800: #1565C0;
---color-secondary-900: #0D47A1;
---color-secondary-950: #062B73;
-
+  --color-secondary-50: #e3f2fd;
+  --color-secondary-100: #bbdefb;
+  --color-secondary-200: #90caf9;
+  --color-secondary-300: #64b5f6;
+  --color-secondary-400: #42a5f5;
+  --color-secondary-500: #2196f3;
+  --color-secondary-600: #1e88e5;
+  --color-secondary-700: #1976d2;
+  --color-secondary-800: #1565c0;
+  --color-secondary-900: #0d47a1;
+  --color-secondary-950: #062b73;
 }
 
 input:-webkit-autofill,

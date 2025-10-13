@@ -19,7 +19,7 @@ const Page = () => {
         </p>
         <Link
           href={"/fields"}
-          className="mt-7 bg-secondary-900 hover:bg-secondary-950 transition-colors duration-300 text-primary-200 px-12 py-4 text-lg cursor-pointer rounded-sm"
+          className="mt-7 bg-green-900 hover:bg-green-950 transition-colors duration-300 text-primary-200 px-12 py-4 text-lg cursor-pointer rounded-sm"
         >
           Explore Fields
         </Link>
