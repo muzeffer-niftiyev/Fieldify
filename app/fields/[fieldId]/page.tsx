@@ -1,4 +1,8 @@
-import { getField, getFields } from "@/app/_services/dataService";
+import {
+  getField,
+  getFields,
+  getReservationDatesByField,
+} from "@/app/_services/dataService";
 import { FieldParams } from "@/app/_types/fields";
 import Image from "next/image";
 import { FaPeopleLine } from "react-icons/fa6";
@@ -28,6 +32,7 @@ export async function generateStaticParams() {
 
 const Page = async ({ params }: FieldParams) => {
   const field = await getField(params.fieldId);
+  const reservedDates = await getReservationDatesByField(params.fieldId);
   const session = await auth();
 
   return (
@@ -77,7 +82,7 @@ const Page = async ({ params }: FieldParams) => {
       <div className="max-w-7xl mx-auto mt-20 border-2 border-primary-900 px-8 py-6 flex flex-col items-center">
         <h2 className="text-5xl text-primary-200">Reserve Now</h2>
         <div className="flex justify-between w-full gap-6 mt-6">
-          <DaySelector />
+          <DaySelector reservedDates={reservedDates} />
           <div className="w-[50%]">
             {session?.user ? <SubmitReservation /> : <LoginMessage />}
           </div>

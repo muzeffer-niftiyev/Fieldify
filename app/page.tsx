@@ -15,7 +15,7 @@ const Page = () => {
       />
       <div className="flex flex-col items-center mt-60 relative z-10">
         <p className="text-6xl text-primary-200">
-          Welcome to Easy Field Booking.
+          Welcome to Fieldify.
         </p>
         <Link
           href={"/fields"}

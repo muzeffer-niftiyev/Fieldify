@@ -74,6 +74,19 @@ input:-webkit-autofill:active {
       transform: rotate(1turn);
     }
   }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #2c3d4f;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #1b2631;
+    border-radius: 10px;
+  }
 }
 
 @theme inline {

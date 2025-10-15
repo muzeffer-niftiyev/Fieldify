@@ -9,3 +9,9 @@ export type TextToggleProps = {
 };
 
 export type EventType = React.ChangeEvent<HTMLSelectElement>;
+
+
+export type DaySelectorPropTypes = {
+  start: Date;
+  end: Date;
+}

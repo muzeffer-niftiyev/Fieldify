@@ -31,7 +31,7 @@ export const addNewUserEmail = async (email: string) => {
 };
 
 export const getUser = async (email: string) => {
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("users")
     .select("*")
     .eq("email", email)
@@ -64,11 +64,38 @@ export const getReservations = async (userId: string | undefined) => {
   const { data, error } = await supabase
     .from("reservations")
     .select(
-      "id, created_at, date, endHour, startHour,totalPrice, status, details, userId, fieldId, fields(name, image)"
+      "id, created_at, startDate, endDate, totalPrice, notes, userId, fieldId, fields(name, image)"
     )
     .eq("userId", userId)
-    .order("date");
+    .order("created_at", { ascending: false });
 
   if (error) throw new Error("Could not get reservations");
   return data;
 };
+
+export async function getReservationDatesByField(fieldId: number) {
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+  const todayISOString = today.toISOString();
+
+  const { data, error } = await supabase
+    .from("reservations")
+    .select("*")
+    .eq("fieldId", fieldId)
+    .or(`startDate.gte.${todayISOString}`);
+
+  if (error) {
+    throw new Error("Bookings could not get loaded");
+  }
+
+  const reservedDates = data
+    .map((reservation) => {
+      return {
+        start: new Date(reservation.startDate),
+        end: new Date(reservation.endDate),
+      };
+    })
+    .flat();
+
+  return reservedDates;
+}
