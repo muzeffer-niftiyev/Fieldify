@@ -14,12 +14,8 @@ const DaySelector = ({
 }: {
   reservedDates: DaySelectorPropTypes[];
 }) => {
-  const {
-    selectedDate,
-    setSelectedDate,
-    setHourRange,
-    hourRange,
-  } = useReservation();
+  const { selectedDate, setSelectedDate, setHourRange, hourRange } =
+    useReservation();
 
   const reservedByDate = reservedDates.reduce(
     (acc: Record<string, number[]>, { start, end }) => {
@@ -55,7 +51,7 @@ const DaySelector = ({
 
       if (
         !reservedHoursForDay.includes(start) &&
-        !reservedHoursForDay.includes(end)
+        !reservedHoursForDay.includes(end - 1)
       ) {
         return { from: start.toString(), to: end.toString() };
       }
@@ -166,7 +162,7 @@ const DaySelector = ({
                 <option
                   key={hour}
                   value={hour}
-                  disabled={reservedHoursForDay.includes(hour)}
+                  disabled={reservedHoursForDay.includes(hour - 1)}
                   className="text-primary-200 bg-primary-900 font-semibold disabled:text-primary-800 "
                 >
                   {hour}:00
