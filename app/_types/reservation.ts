@@ -25,3 +25,9 @@ export type ReservationDataTypes = {
     image: string;
   };
 };
+
+export interface EditReservationParams {
+  params: {
+    reservationId: number;
+  };
+}

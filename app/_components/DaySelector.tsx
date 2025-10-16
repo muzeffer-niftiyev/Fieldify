@@ -41,19 +41,28 @@ const DaySelector = ({
   const fullyBookedDays = Object.entries(reservedByDate)
     .filter(([_, hours]) => allHours.every((h) => hours.includes(h)))
     .map(([date]) => new Date(date));
+
   const selectedKey = selectedDate?.toDateString();
   const reservedHoursForDay = reservedByDate[selectedKey ?? ""] || [];
+
+  const isRangeFree = (start: number, endExclusive: number) => {
+    for (let h = start; h < endExclusive; h++) {
+      if (reservedHoursForDay.includes(h)) return false;
+    }
+    return true;
+  };
 
   const findFirstAvailableRange = () => {
     for (let i = 0; i < fromHours.length; i++) {
       const start = fromHours[i];
-      const end = start + 1;
+      if (reservedHoursForDay.includes(start)) continue;
 
-      if (
-        !reservedHoursForDay.includes(start) &&
-        !reservedHoursForDay.includes(end - 1)
-      ) {
-        return { from: start.toString(), to: end.toString() };
+      const possibleTo = toHours.find(
+        (t) => t > start && t - start <= 3 && isRangeFree(start, t)
+      );
+
+      if (possibleTo) {
+        return { from: start.toString(), to: possibleTo.toString() };
       }
     }
     return { from: "", to: "" };
@@ -79,24 +88,25 @@ const DaySelector = ({
     }
 
     if (newFrom) {
-      setHourRange(() => ({ from: newFrom, to }));
+      setHourRange(() => ({ from: newFrom.toString(), to }));
     } else {
       setHourRange((prev) => ({ ...prev, to }));
     }
   };
 
+  const fromNum = hourRange.from ? Number(hourRange.from) : null;
+
   const filteredFromHours = fromHours.filter((hour) => {
-    if (+hourRange.to === 13) return true;
-    const toIndex = toHours.indexOf(+hourRange.to);
-    const hourIndex = fromHours.indexOf(hour);
-    return toIndex >= hourIndex && hourIndex > toIndex - 3;
+    return !reservedHoursForDay.includes(hour);
   });
 
   const filteredToHours = toHours.filter((hour) => {
-    if (+hourRange.from === 12) return true;
-    const fromIndex = fromHours.indexOf(+hourRange.from);
-    const hourIndex = toHours.indexOf(hour);
-    return hourIndex >= fromIndex && hourIndex < fromIndex + 3;
+    if (reservedHoursForDay.includes(hour - 1)) return false;
+    if (fromNum === null) return true;
+    if (hour <= fromNum) return false;
+    if (hour - fromNum > 3) return false;
+
+    return isRangeFree(fromNum, hour);
   });
 
   const handleResetHours = () => {
@@ -109,7 +119,7 @@ const DaySelector = ({
     if (!selectedDate) return;
     const firstAvailable = findFirstAvailableRange();
     setHourRange(firstAvailable);
-  }, [selectedDate]);
+  }, [selectedDate, JSON.stringify(reservedDates)]);
 
   return (
     <div className="w-[50%] flex items-start gap-8">

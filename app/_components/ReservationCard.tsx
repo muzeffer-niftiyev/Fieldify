@@ -6,6 +6,7 @@ import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { deleteReservation } from "../_services/actions";
 import { useTransition } from "react";
+import Link from "next/link";
 
 const ReservationCard = ({
   reservation,
@@ -116,10 +117,13 @@ const ReservationCard = ({
       </div>
 
       <div className="flex flex-col">
-        <button className="flex-1 px-6 py-2 text-md uppercase text-primary-300 flex justify-center items-center gap-2 border-b-2 border-primary-800 cursor-pointer transition-all hover:bg-primary-900">
+        <Link
+          href={`/account/reservations/edit/${id}`}
+          className="flex-1 px-6 py-2 text-md uppercase text-primary-300 flex justify-center items-center gap-2 border-b-2 border-primary-800 cursor-pointer transition-all hover:bg-primary-900"
+        >
           <FaEdit size={20} />
           <span>Edit</span>
-        </button>
+        </Link>
         <button
           onClick={handleDelete}
           className="flex-1 px-6 py-2 text-md uppercase text-primary-300 flex justify-center items-center gap-2 cursor-pointer transition-all hover:bg-primary-900"

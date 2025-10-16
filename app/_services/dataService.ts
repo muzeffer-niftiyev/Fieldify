@@ -99,3 +99,19 @@ export async function getReservationDatesByField(fieldId: number) {
 
   return reservedDates;
 }
+
+export async function getReservation(reservationId: number) {
+  const { data, error } = await supabase
+    .from("reservations")
+    .select(
+      "id, startDate, endDate, totalPrice, notes, fieldId, fields(name, image, price)"
+    )
+    .eq("id", reservationId)
+    .single();
+
+  if (error) {
+    throw new Error("Booking could not get loaded");
+  }
+
+  return data;
+}
