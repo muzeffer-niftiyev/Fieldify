@@ -15,3 +15,9 @@ export type DaySelectorPropTypes = {
   start: Date;
   end: Date;
 }
+
+type ReservedByDate = Record<string, number[]>;
+
+export interface HourRangeProps {
+  reservedByDate: ReservedByDate;
+}

@@ -13,7 +13,7 @@ const Page = async () => {
 
   return (
     <div>
-      <h2 className="text-2xl text-primary-200 mb-12">Your Reservations</h2>
+      <h2 className="text-2xl text-primary-200 mb-8">Your Reservations</h2>
       {reservations.length === 0 ? (
         <p className="font-semibold text-lg">
           You have no reservations yet. Check out

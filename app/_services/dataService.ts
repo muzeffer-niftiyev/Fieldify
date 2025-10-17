@@ -103,9 +103,7 @@ export async function getReservationDatesByField(fieldId: number) {
 export async function getReservation(reservationId: number) {
   const { data, error } = await supabase
     .from("reservations")
-    .select(
-      "id, startDate, endDate, totalPrice, notes, fieldId, fields(name, image, price)"
-    )
+    .select("*")
     .eq("id", reservationId)
     .single();
 
