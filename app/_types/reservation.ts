@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 
 export type ReservationType = {
   selectedDate: Date | undefined;
@@ -30,4 +30,28 @@ export interface EditReservationParams {
   params: {
     reservationId: number;
   };
+}
+
+export type EditReservationProps = {
+  children: ReactNode;
+  fieldId: number;
+  notes: string;
+};
+
+export type EditReservationType = {
+  selectedFieldId: number | undefined;
+  setSelectedFieldId: Dispatch<SetStateAction<number | undefined>>;
+  reservationNotes: string | undefined;
+  setReservationNotes: Dispatch<SetStateAction<string | undefined>>;
+};
+
+export interface NewFieldSelectorProps {
+  fieldData: {
+    id: number;
+    image: string;
+    isFree: boolean;
+    name: string;
+    price: number;
+  }[];
+  totalHours: number;
 }

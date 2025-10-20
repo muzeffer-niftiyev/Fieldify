@@ -1,10 +1,13 @@
+import EditReservationButton from "@/app/_components/EditReservationButton";
+import NewFieldSelector from "@/app/_components/NewFieldSelector";
+import ReservationNoteEditor from "@/app/_components/ReservationNoteEditor";
+import { EditReservationProvider } from "@/app/_context/EditReservationConext";
 import {
   getFields,
   getReservation,
   getReservationDatesByField,
 } from "@/app/_services/dataService";
 import { EditReservationParams } from "@/app/_types/reservation";
-import Image from "next/image";
 
 const page = async ({ params }: EditReservationParams) => {
   const { reservationId } = params;
@@ -106,76 +109,13 @@ const page = async ({ params }: EditReservationParams) => {
         </p>
       </div>
 
-      <div className="bg-primary-900 p-6 text-primary-200 space-y-8">
-        <label className="text-lg">Change field</label>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-6 mt-2">
-          {fieldData?.map((field) => (
-            <div key={field.id} className="border-2 border-primary-800">
-              <div className="relative aspect-1/1 flex flex-col justify-center">
-                <Image
-                  src={field.image}
-                  fill
-                  className={`object-cover 
-                  ${!field.isFree ? "grayscale-[70%]" : ""}`}
-                  alt={`${field.name} image`}
-                />
-              </div>
-              <h4 className="text-2xl font-extrabold text-center mt-2">
-                {field.name}
-              </h4>
-              <div>
-                <p className="text-primary-300 text-lg text-center">
-                  Total price:
-                  <span className="text-primary-200 text-xl">
-                    {" "}
-                    ${field.price * totalHours}
-                  </span>
-                </p>
-              </div>
-              <div className="flex justify-center">
-                <button
-                  disabled={field.id === fieldId || !field.isFree}
-                  className=" bg-secondary-900 cursor-pointer hover:bg-secondary-950 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300 text-primary-200 rounded-sm text-lg my-4 py-1 px-8"
-                >
-                  {field.id === fieldId
-                    ? "Selected"
-                    : field.isFree
-                    ? "Select"
-                    : "Reserved"}
-                </button>
-              </div>
-
-              {/* <button
-                disabled={field.isFree}
-                className="bg-red-500 disabled:bg-green-800"
-              >
-                {field.isFree
-                  ? "Can Select"
-                  : field.id === fieldId
-                  ? "Current Field"
-                  : "Can't select"}
-              </button> */}
-            </div>
-          ))}
+      <EditReservationProvider fieldId={fieldId} notes={notes}>
+        <div className="bg-primary-900 p-6 text-primary-200 space-y-8">
+          <NewFieldSelector fieldData={fieldData} totalHours={totalHours} />
+          <ReservationNoteEditor />
+          <EditReservationButton reservationId={Number(reservationId)} />
         </div>
-
-        <div className="space-y-2">
-          <label htmlFor="notes" className="text-lg">
-            Anything you want to note about your reservation
-          </label>
-          <textarea
-            name="notes"
-            rows={4}
-            placeholder="Your Notes..."
-            defaultValue={notes}
-            className="mt-2 px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm resize-none"
-          />
-        </div>
-        <div className="flex justify-end">
-
-        <button>Edit Reservation</button>
-        </div>
-      </div>
+      </EditReservationProvider>
     </div>
   );
 };

@@ -119,11 +119,17 @@ const ReservationCard = ({
       <div className="flex flex-col">
         <Link
           href={`/account/reservations/edit/${id}`}
-          className="flex-1 px-6 py-2 text-md uppercase text-primary-300 flex justify-center items-center gap-2 border-b-2 border-primary-800 cursor-pointer transition-all hover:bg-primary-900"
+          className="flex-1 border-b-2 border-primary-800 transition-all hover:bg-primary-900 "
         >
-          <FaEdit size={20} />
-          <span>Edit</span>
+          <button
+            disabled={getStatus() === "past"}
+            className="flex justify-center items-center gap-2 uppercase text-primary-300 px-6 py-2 text-md w-full h-full cursor-pointer disabled:bg-primary-900 disabled:cursor-not-allowed"
+          >
+            <FaEdit size={20} />
+            <span>Edit</span>
+          </button>
         </Link>
+
         <button
           onClick={handleDelete}
           className="flex-1 px-6 py-2 text-md uppercase text-primary-300 flex justify-center items-center gap-2 cursor-pointer transition-all hover:bg-primary-900"

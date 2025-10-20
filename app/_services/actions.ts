@@ -59,3 +59,35 @@ export async function deleteReservation(reservationId: number) {
   if (error) throw new Error("Error deleting the reservation!");
   revalidatePath("/account/reservations");
 }
+
+export async function editReservation(
+  fieldId: number | undefined,
+  notes: string | undefined,
+  reservationId: number
+) {
+  const session = await auth();
+  if (!session) redirect("/login");
+
+  const userReservations = await getReservations(session.user.userId);
+  const userReservationIds = userReservations.map(
+    (reservation) => reservation.id
+  );
+
+  if (!userReservationIds.includes(reservationId)) {
+    throw new Error("You can't edit other's reservations");
+  }
+
+  const { error } = await supabase
+    .from("reservations")
+    .update({ fieldId, notes: notes?.slice(0, 1000) })
+    .eq("id", reservationId)
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error("Error while editing the reservation!");
+  }
+
+  revalidatePath("/account/reservations");
+  redirect("/account/reservations");
+}
