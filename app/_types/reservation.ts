@@ -36,6 +36,7 @@ export type EditReservationProps = {
   children: ReactNode;
   fieldId: number;
   notes: string;
+  totalPrice: number;
 };
 
 export type EditReservationType = {
@@ -43,6 +44,8 @@ export type EditReservationType = {
   setSelectedFieldId: Dispatch<SetStateAction<number | undefined>>;
   reservationNotes: string | undefined;
   setReservationNotes: Dispatch<SetStateAction<string | undefined>>;
+  totalPrice: number | undefined;
+  setTotalPrice: Dispatch<SetStateAction<number | undefined>>;
 };
 
 export interface NewFieldSelectorProps {

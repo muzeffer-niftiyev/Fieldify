@@ -14,12 +14,16 @@ export const EditReservationProvider = ({
   children,
   fieldId,
   notes,
+  totalPrice: initialPrice,
 }: EditReservationProps) => {
   const [selectedFieldId, setSelectedFieldId] = useState<number | undefined>(
     fieldId
   );
   const [reservationNotes, setReservationNotes] = useState<string | undefined>(
     notes
+  );
+  const [totalPrice, setTotalPrice] = useState<number | undefined>(
+    initialPrice
   );
 
   return (
@@ -29,6 +33,8 @@ export const EditReservationProvider = ({
         setSelectedFieldId,
         reservationNotes,
         setReservationNotes,
+        totalPrice,
+        setTotalPrice,
       }}
     >
       {children}

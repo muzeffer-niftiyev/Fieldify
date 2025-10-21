@@ -3,7 +3,7 @@ import { auth } from "../_services/auth";
 import { getUser } from "../_services/dataService";
 
 export const metadata = {
-  title: "Account",
+  title: "Profile",
 };
 
 const Page = async () => {

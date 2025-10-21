@@ -63,7 +63,8 @@ export async function deleteReservation(reservationId: number) {
 export async function editReservation(
   fieldId: number | undefined,
   notes: string | undefined,
-  reservationId: number
+  reservationId: number,
+  totalPrice: number | undefined
 ) {
   const session = await auth();
   if (!session) redirect("/login");
@@ -79,7 +80,7 @@ export async function editReservation(
 
   const { error } = await supabase
     .from("reservations")
-    .update({ fieldId, notes: notes?.slice(0, 1000) })
+    .update({ fieldId, notes: notes?.slice(0, 1000), totalPrice })
     .eq("id", reservationId)
     .select()
     .single();

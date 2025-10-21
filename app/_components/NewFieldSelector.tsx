@@ -5,7 +5,13 @@ import { useEditReservation } from "../_context/EditReservationConext";
 import { NewFieldSelectorProps } from "../_types/reservation";
 
 const NewFieldSelector = ({ fieldData, totalHours }: NewFieldSelectorProps) => {
-  const { selectedFieldId, setSelectedFieldId } = useEditReservation();
+  const { selectedFieldId, setSelectedFieldId, setTotalPrice } =
+    useEditReservation();
+
+  const handleClick = (fieldId: number, fieldPrice: number) => {
+    setSelectedFieldId(fieldId);
+    setTotalPrice(fieldPrice * totalHours);
+  };
 
   return (
     <>
@@ -36,9 +42,9 @@ const NewFieldSelector = ({ fieldData, totalHours }: NewFieldSelectorProps) => {
             </div>
             <div className="flex justify-center">
               <button
-                onClick={() => setSelectedFieldId(field.id)}
+                onClick={() => handleClick(field.id, field.price)}
                 disabled={field.id === selectedFieldId || !field.isFree}
-                className="bg-secondary-900 cursor-pointer hover:bg-secondary-950 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300 text-primary-200 text-lg py-2 mt-4 w-full"
+                className="bg-zinc-800 cursor-pointer hover:bg-zinc-900 transition-all disabled:cursor-not-allowed disabled:bg-zinc-500 disabled:text-zinc-300 text-primary-200 text-lg py-2 mt-4 w-full"
               >
                 {field.id === selectedFieldId
                   ? "Selected"

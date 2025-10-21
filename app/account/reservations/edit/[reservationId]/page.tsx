@@ -9,11 +9,14 @@ import {
 } from "@/app/_services/dataService";
 import { EditReservationParams } from "@/app/_types/reservation";
 
+export const metadata = {
+  title: "Edit Reservation",
+};
+
 const page = async ({ params }: EditReservationParams) => {
   const { reservationId } = params;
-  const { fieldId, notes, startDate, endDate } = await getReservation(
-    reservationId
-  );
+  const { fieldId, notes, startDate, endDate, totalPrice } =
+    await getReservation(reservationId);
   const allFields = await getFields();
 
   const getBusyHoursForReservation = () => {
@@ -109,7 +112,11 @@ const page = async ({ params }: EditReservationParams) => {
         </p>
       </div>
 
-      <EditReservationProvider fieldId={fieldId} notes={notes}>
+      <EditReservationProvider
+        fieldId={fieldId}
+        notes={notes}
+        totalPrice={totalPrice}
+      >
         <div className="bg-primary-900 p-6 text-primary-200 space-y-8">
           <NewFieldSelector fieldData={fieldData} totalHours={totalHours} />
           <ReservationNoteEditor />
