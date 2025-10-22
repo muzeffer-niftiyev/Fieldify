@@ -2,20 +2,30 @@
 
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
-import { useReservation } from "../_context/ReservationContext";
+import { useAddReservation } from "../_context/AddReservationContext";
 import { DaySelectorPropTypes, EventType } from "../_types/fields";
 import { useEffect } from "react";
-
-const fromHours = Array.from({ length: 9 }, (_, i) => 12 + i);
-const toHours = Array.from({ length: 9 }, (_, i) => 13 + i);
+import { fromHours, toHours, allHours } from "../_lib/helpers";
+import TotalPriceCalculator from "./TotalPriceCalculator";
 
 const DaySelector = ({
   reservedDates,
+  price,
+  id,
 }: {
   reservedDates: DaySelectorPropTypes[];
+  price: number;
+  id: number;
 }) => {
-  const { selectedDate, setSelectedDate, setHourRange, hourRange } =
-    useReservation();
+  const {
+    selectedDate,
+    setSelectedDate,
+    setHourRange,
+    hourRange,
+    fieldId,
+    setFieldId,
+    resetValues,
+  } = useAddReservation();
 
   const reservedByDate = reservedDates.reduce(
     (acc: Record<string, number[]>, { start, end }) => {
@@ -37,7 +47,6 @@ const DaySelector = ({
     {}
   );
 
-  const allHours = Array.from({ length: 9 }, (_, i) => 12 + i);
   const fullyBookedDays = Object.entries(reservedByDate)
     .filter(([_, hours]) => allHours.every((h) => hours.includes(h)))
     .map(([date]) => new Date(date));
@@ -116,81 +125,91 @@ const DaySelector = ({
   };
 
   useEffect(() => {
+    if (id !== fieldId) {
+      resetValues();
+      setFieldId(id);
+    }
+  }, [id, fieldId, resetValues, setFieldId]);
+
+  useEffect(() => {
     if (!selectedDate) return;
     const firstAvailable = findFirstAvailableRange();
     setHourRange(firstAvailable);
   }, [selectedDate, JSON.stringify(reservedDates)]);
 
   return (
-    <div className="w-[50%] flex items-start gap-8">
-      <DayPicker
-        className="rdp"
-        animate
-        mode="single"
-        selected={selectedDate}
-        onSelect={setSelectedDate}
-        disabled={[{ before: new Date() }, new Date(), ...fullyBookedDays]}
-        startMonth={new Date()}
-        endMonth={new Date(new Date().setMonth(new Date().getMonth() + 2))}
-      />
-      {selectedDate && (
-        <div className="flex gap-8 mt-8 w-full flex-col">
-          <div className="flex flex-1 flex-col gap-2">
-            <label htmlFor="from" className="text-lg text-primary-200">
-              Start Hour
-            </label>
-            <select
-              className="border-2 border-primary-900 rounded px-4 py-3 outline-none text-md cursor-pointer"
-              name="from"
-              value={hourRange.from || ""}
-              onChange={(event) => handleFromChange(event)}
-            >
-              {filteredFromHours.map((hour) => (
-                <option
-                  key={hour}
-                  value={hour}
-                  disabled={reservedHoursForDay.includes(hour)}
-                  className="text-primary-200 bg-primary-900 font-semibold disabled:text-primary-800"
-                >
-                  {hour}:00
-                </option>
-              ))}
-            </select>
-          </div>
+    <div className="w-[50%] flex flex-col">
+      <div className="flex items-start gap-8">
+        <DayPicker
+          className="rdp"
+          animate
+          mode="single"
+          selected={selectedDate}
+          onSelect={setSelectedDate}
+          disabled={[{ before: new Date() }, new Date(), ...fullyBookedDays]}
+          startMonth={new Date()}
+          endMonth={new Date(new Date().setMonth(new Date().getMonth() + 2))}
+        />
+        {selectedDate && (
+          <div className="flex gap-8 mt-8 w-full flex-col">
+            <div className="flex flex-1 flex-col gap-2">
+              <label htmlFor="from" className="text-lg text-primary-200">
+                Start Hour
+              </label>
+              <select
+                className="border-2 border-primary-900 rounded px-4 py-3 outline-none text-md cursor-pointer"
+                name="from"
+                value={hourRange.from || ""}
+                onChange={(event) => handleFromChange(event)}
+              >
+                {filteredFromHours.map((hour) => (
+                  <option
+                    key={hour}
+                    value={hour}
+                    disabled={reservedHoursForDay.includes(hour)}
+                    className="text-primary-200 bg-primary-900 font-semibold disabled:text-primary-800"
+                  >
+                    {hour}:00
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div className="flex flex-1 flex-col gap-2">
-            <label htmlFor="to" className="text-lg text-primary-200">
-              End Hour
-            </label>
-            <select
-              className="border-2 border-primary-900 rounded px-4 py-3 outline-none text-md cursor-pointer"
-              name="to"
-              value={hourRange.to || ""}
-              onChange={(event) => handleToChange(event)}
-            >
-              {filteredToHours.map((hour) => (
-                <option
-                  key={hour}
-                  value={hour}
-                  disabled={reservedHoursForDay.includes(hour - 1)}
-                  className="text-primary-200 bg-primary-900 font-semibold disabled:text-primary-800 "
-                >
-                  {hour}:00
-                </option>
-              ))}
-            </select>
-          </div>
+            <div className="flex flex-1 flex-col gap-2">
+              <label htmlFor="to" className="text-lg text-primary-200">
+                End Hour
+              </label>
+              <select
+                className="border-2 border-primary-900 rounded px-4 py-3 outline-none text-md cursor-pointer"
+                name="to"
+                value={hourRange.to || ""}
+                onChange={(event) => handleToChange(event)}
+              >
+                {filteredToHours.map((hour) => (
+                  <option
+                    key={hour}
+                    value={hour}
+                    disabled={reservedHoursForDay.includes(hour - 1)}
+                    className="text-primary-200 bg-primary-900 font-semibold disabled:text-primary-800 "
+                  >
+                    {hour}:00
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div className="flex justify-center">
-            <button
-              onClick={handleResetHours}
-              className="font-semibold text-lg bg-primary-900 hover:bg-primary-800 transition-all duration-300 py-2 px-12 cursor-pointer rounded-md"
-            >
-              Reset Hours
-            </button>
+            <div className="flex justify-center">
+              <button
+                onClick={handleResetHours}
+                className="font-semibold text-lg bg-primary-900 hover:bg-primary-800 transition-all duration-300 py-2 px-12 cursor-pointer rounded-md"
+              >
+                Reset Hours
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
+      {selectedDate && <TotalPriceCalculator price={price} />}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { Quicksand } from "next/font/google";
 import Navbar from "./_components/Navbar";
 import "@/app/_styles/globals.css";
 
-import { ReservationProvider } from "./_context/ReservationContext";
+import { AddReservationProvider } from "./_context/AddReservationContext";
 
 const quicksand = Quicksand({
   weight: ["700", "600", "500", "400"],
@@ -29,12 +29,12 @@ export default async function RootLayout({
       <body
         className={`${quicksand.className} font-bold antialiased min-h-screen bg-primary-950 text-primary-100 flex flex-col relative`}
       >
-        <ReservationProvider>
+        <AddReservationProvider>
           <Navbar />
           <div className="flex flex-1 px-10 py-14 w-full">
             <main className="max-w-7xl mx-auto flex-1">{children}</main>
           </div>
-        </ReservationProvider>
+        </AddReservationProvider>
       </body>
     </html>
   );

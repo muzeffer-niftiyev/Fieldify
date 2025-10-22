@@ -7,6 +7,7 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import { deleteReservation } from "../_services/actions";
 import { useTransition } from "react";
 import Link from "next/link";
+import { formatDate, getDayDifference } from "../_lib/helpers";
 
 const ReservationCard = ({
   reservation,
@@ -15,7 +16,6 @@ const ReservationCard = ({
 }) => {
   const {
     id,
-    userId,
     startDate,
     created_at,
     endDate,
@@ -29,43 +29,9 @@ const ReservationCard = ({
   const totalHours = endHour - startHour;
   const createdDate = new Date(created_at);
 
-  const formatDate = (date: Date) => {
-    return new Date(date).toLocaleDateString("en-US", {
-      month: "long",
-      day: "2-digit",
-      year: "numeric",
-    });
-  };
-
   const getStatus = () => {
     const start = new Date(startDate);
     return start >= now ? "upcoming" : "past";
-  };
-
-  const getDayDifference = () => {
-    const start = new Date(startDate);
-    const nowMid = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const startMid = new Date(
-      start.getFullYear(),
-      start.getMonth(),
-      start.getDate()
-    );
-
-    const dayDifference = Math.round(
-      (+startMid - +nowMid) / (24 * 60 * 60 * 1000)
-    );
-
-    if (dayDifference === 0) {
-      return "today";
-    } else if (dayDifference === 1) {
-      return "tomorrow";
-    } else if (Math.abs(dayDifference) === 1) {
-      return "yesterday";
-    } else if (dayDifference > 0) {
-      return `in ${dayDifference} days`;
-    } else {
-      return `${Math.abs(dayDifference)} days ago`;
-    }
   };
 
   const [pending, startTransition] = useTransition();
@@ -92,7 +58,7 @@ const ReservationCard = ({
               {totalHours} hours at {name}
             </h3>
             <p className="text-md text-primary-300">
-              {formatDate(startDate)} ({getDayDifference()}) | {startHour}:00 -{" "}
+              {formatDate(startDate)} ({getDayDifference(startDate)}) | {startHour}:00 -{" "}
               {endHour}:00
             </p>
           </div>

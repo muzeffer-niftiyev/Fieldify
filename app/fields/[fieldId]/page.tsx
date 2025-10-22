@@ -13,6 +13,7 @@ import DaySelector from "@/app/_components/DaySelector";
 import SubmitReservation from "@/app/_components/SubmitReservation";
 import { auth } from "@/app/_services/auth";
 import LoginMessage from "@/app/_components/LoginMessage";
+import { useAddReservation } from "@/app/_context/AddReservationContext";
 
 export async function generateMetadata({ params }: FieldParams) {
   const { name } = await getField(params.fieldId);
@@ -79,11 +80,11 @@ const Page = async ({ params }: FieldParams) => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto mt-20 border-2 border-primary-900 px-8 py-6 flex flex-col items-center">
+      <div className="max-w-7xl mx-auto mt-20 border-2 border-primary-900 px-8 py-6 flex flex-col items-center h-[600px]">
         <h2 className="text-5xl text-primary-200">Reserve Now</h2>
-        <div className="flex justify-between w-full gap-6 mt-6">
-          <DaySelector reservedDates={reservedDates} />
-          <div className="w-[50%]">
+        <div className="flex justify-between w-full h-full gap-6 mt-6">
+          <DaySelector reservedDates={reservedDates} price={field.price} id={field.id} />
+          <div className="w-[50%] h-full">
             {session?.user ? <SubmitReservation /> : <LoginMessage />}
           </div>
         </div>

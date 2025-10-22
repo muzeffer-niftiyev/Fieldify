@@ -92,3 +92,34 @@ export async function editReservation(
   revalidatePath("/account/reservations");
   redirect("/account/reservations");
 }
+
+export async function addReservation(
+  dates: { startDate: Date; endDate: Date },
+  totalPrice: number | undefined,
+  notes: string | undefined,
+  fieldId: number | undefined
+) {
+  const session = await auth();
+  if (!session) redirect("/login");
+  console.log(dates);
+
+  const newReservationData = {
+    userId: session.user.userId,
+    startDate: dates.startDate,
+    endDate: dates.endDate,
+    notes: notes?.slice(0, 1000),
+    totalPrice,
+    fieldId,
+  };
+
+  const { error } = await supabase
+    .from("reservations")
+    .insert([newReservationData])
+    .select()
+    .single();
+  if (error) {
+    throw new Error("Error while adding the reservation!");
+  }
+
+  redirect("/account/reservations");
+}

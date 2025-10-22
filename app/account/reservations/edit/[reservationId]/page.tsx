@@ -8,6 +8,7 @@ import {
   getReservationDatesByField,
 } from "@/app/_services/dataService";
 import { EditReservationParams } from "@/app/_types/reservation";
+import { formatDate } from "@/app/_lib/helpers";
 
 export const metadata = {
   title: "Edit Reservation",
@@ -92,14 +93,6 @@ const page = async ({ params }: EditReservationParams) => {
   const startHour = new Date(startDate).getHours();
   const endHour = new Date(endDate).getHours();
   const totalHours = endHour - startHour;
-
-  const formatDate = (date: Date) => {
-    return new Date(date).toLocaleDateString("en-US", {
-      month: "long",
-      day: "2-digit",
-      year: "numeric",
-    });
-  };
 
   return (
     <div>

@@ -2,22 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { IoPersonOutline } from "react-icons/io5";
-import { signOutAction } from "../_services/actions";
-import { FaCalendarAlt, FaSignOutAlt } from "react-icons/fa";
 
-const links = [
-  {
-    name: "Profile",
-    href: "/account",
-    icon: <IoPersonOutline />,
-  },
-  {
-    name: "Reservations",
-    href: "/account/reservations",
-    icon: <FaCalendarAlt />,
-  },
-];
+import { signOutAction } from "../_services/actions";
+import { FaSignOutAlt } from "react-icons/fa";
+import { accountNavigationLinks } from "../_lib/helpers";
 
 const AccountNavigation = () => {
   const pathname = usePathname();
@@ -25,7 +13,7 @@ const AccountNavigation = () => {
   return (
     <aside className="border-r-2 border-primary-900 text-lg pr-8 h-full flex flex-col justify-between">
       <div className="flex flex-col gap-4">
-        {links.map((link) => (
+        {accountNavigationLinks.map((link) => (
           <Link
             key={link.name}
             href={link.href}

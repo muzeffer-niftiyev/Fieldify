@@ -5,6 +5,13 @@ export type ReservationType = {
   setSelectedDate: Dispatch<SetStateAction<Date | undefined>>;
   hourRange: HourRangeType;
   setHourRange: Dispatch<SetStateAction<HourRangeType>>;
+  totalPrice: number | undefined;
+  setTotalPrice: Dispatch<SetStateAction<number | undefined>>;
+  notes: string | undefined;
+  setNotes: Dispatch<SetStateAction<string | undefined>>;
+  fieldId: number | undefined;
+  setFieldId: Dispatch<SetStateAction<number | undefined>>;
+  resetValues: () => void;
 };
 
 export type HourRangeType = {
