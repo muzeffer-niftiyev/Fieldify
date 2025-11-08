@@ -138,7 +138,7 @@ const DaySelector = ({
   }, [selectedDate, JSON.stringify(reservedDates)]);
 
   return (
-    <div className="w-[50%] flex flex-col">
+    <div className="w-[50%] flex flex-col justify-between">
       <div className="flex items-start gap-8">
         <DayPicker
           className="rdp"

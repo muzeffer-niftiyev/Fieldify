@@ -9,13 +9,11 @@ const SubmitReservation = () => {
   const [pending, setPending] = useState(false);
 
   const generateDates = () => {
-
     const startDate = new Date(selectedDate);
     startDate.setHours(+hourRange.from, 0, 0, 0);
     
     const endDate = new Date(selectedDate);
     endDate.setHours(+hourRange.to, 0, 0, 0);
-    console.log({ startDate, endDate });
 
     return {startDate, endDate}
   }
@@ -26,9 +24,9 @@ const SubmitReservation = () => {
       const dates = generateDates();
       console.log(dates)
       await addReservation(dates, totalPrice, notes, fieldId );
-      resetValues();
     } finally {
       setPending(false);
+      resetValues();
     }
   };
 

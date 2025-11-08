@@ -97,7 +97,7 @@ const page = async ({ params }: EditReservationParams) => {
   return (
     <div>
       <div className="flex justify-between">
-        <h2 className="text-2xl text-primary-200 mb-8">
+        <h2 className="text-2xl text-primary-200 mb-6">
           Edit Reservation #{reservationId}
         </h2>
         <p className="text-lg text-primary-300">
@@ -110,7 +110,7 @@ const page = async ({ params }: EditReservationParams) => {
         notes={notes}
         totalPrice={totalPrice}
       >
-        <div className="bg-primary-900 p-6 text-primary-200 space-y-8">
+        <div className="bg-primary-900 p-6 text-primary-200 space-y-6">
           <NewFieldSelector fieldData={fieldData} totalHours={totalHours} />
           <ReservationNoteEditor />
           <EditReservationButton reservationId={Number(reservationId)} />

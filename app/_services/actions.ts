@@ -102,6 +102,7 @@ export async function addReservation(
   const session = await auth();
   if (!session) redirect("/login");
   console.log(dates);
+  console.log(dates.startDate);
 
   const newReservationData = {
     userId: session.user.userId,
